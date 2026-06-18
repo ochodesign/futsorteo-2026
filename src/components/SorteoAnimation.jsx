@@ -86,6 +86,7 @@ const SorteoAnimation = ({ players = [], onComplete }) => {
                         ref={videoRef}
                         src="/maradona.mp4"
                         autoPlay
+                        preload="auto"
                         playsInline
                         muted
                         onLoadedMetadata={handleLoadedMetadata}
