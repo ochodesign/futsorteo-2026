@@ -219,14 +219,14 @@ const Home = ({ showAlert, showConfirm }) => {
         setLoading(false);
         setShowAnimation(false);
 
-        // Registrar en el historial de sorteos recientes
+        // Registrar en el historial de sorteos recientes (guardando solo el último)
         const newDraw = {
             id: Date.now(),
             date: new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }) + ' hs',
             team1: team1.map(p => ({ name: p.name, isGk: p.isGk })),
             team2: team2.map(p => ({ name: p.name, isGk: p.isGk }))
         };
-        const updatedHistory = [newDraw, ...history].slice(0, 5); // Guardamos los últimos 5
+        const updatedHistory = [newDraw]; // Guardamos solo el último sorteo
         setHistory(updatedHistory);
         localStorage.setItem('futsorteo_historial', JSON.stringify(updatedHistory));
 
