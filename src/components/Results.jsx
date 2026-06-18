@@ -132,26 +132,8 @@ const Results = ({ teams, setTeams, onReset, onSave, showAlert }) => {
                             <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.06)_0%,rgba(0,0,0,0.5)_85%)] z-10" />
 
                             {/* Centered Premium Placeholder Content */}
-                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/15 backdrop-blur-[1px] z-20">
-                                <motion.div
-                                    animate={{ 
-                                        scale: [1, 1.08, 1],
-                                        rotate: [0, 5, -5, 0]
-                                    }}
-                                    transition={{ 
-                                        repeat: Infinity, 
-                                        duration: 4,
-                                        ease: "easeInOut"
-                                    }}
-                                    className="mb-4 w-20 h-20"
-                                >
-                                    <img 
-                                        src="/pelota-futsorteo.svg" 
-                                        alt="FutSorteo Pelota" 
-                                        className="w-full h-full drop-shadow-[0_0_15px_rgba(56,189,248,0.5)]" 
-                                    />
-                                </motion.div>
-                                <p className="text-[11px] font-black uppercase tracking-[0.25em] text-white/75 bg-fut-dark/80 backdrop-blur-md px-5 py-2.5 rounded-2xl border border-white/5 italic shadow-xl">
+                            <div className="absolute inset-x-0 bottom-6 flex justify-center z-20 pointer-events-none">
+                                <p className="text-[9px] font-black uppercase tracking-[0.25em] text-white/50 bg-[#08111e]/90 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/5 italic shadow-2xl">
                                     A la espera del sorteo ⚽
                                 </p>
                             </div>
