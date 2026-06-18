@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { RotateCcw, Save, Users, Shield, Share2, ArrowLeftRight } from 'lucide-react';
 import { MdPanTool } from 'react-icons/md';
 
 const Results = ({ teams, setTeams, onReset, onSave, showAlert }) => {
     const [swapSelection, setSwapSelection] = useState(null); // { team: 'team1'|'team2', index: number }
+    const [fieldType, setFieldType] = useState(() => {
+        return localStorage.getItem('futsorteo_field_type') || 'cesped';
+    });
+
+    useEffect(() => {
+        localStorage.setItem('futsorteo_field_type', fieldType);
+    }, [fieldType]);
 
     const handlePlayerClick = (team, index) => {
         if (!swapSelection) {
@@ -81,6 +88,24 @@ const Results = ({ teams, setTeams, onReset, onSave, showAlert }) => {
 
     return (
         <div className="space-y-6">
+            {/* Control Segmentado de Tipo de Cancha */}
+            <div className="flex justify-center">
+                <div className="bg-fut-dark/80 border border-white/5 p-1 rounded-2xl flex gap-1 items-center shadow-2xl relative z-10">
+                    <button
+                        onClick={() => setFieldType('cesped')}
+                        className={`px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 flex items-center gap-1.5 italic ${fieldType === 'cesped' ? 'bg-fut-primary text-fut-dark shadow-lg shadow-fut-primary/20 scale-105' : 'text-white/40 hover:text-white'}`}
+                    >
+                        Césped 🌱
+                    </button>
+                    <button
+                        onClick={() => setFieldType('piso')}
+                        className={`px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 flex items-center gap-1.5 italic ${fieldType === 'piso' ? 'bg-fut-primary text-fut-dark shadow-lg shadow-fut-primary/20 scale-105' : 'text-white/40 hover:text-white'}`}
+                    >
+                        Piso 🏟️
+                    </button>
+                </div>
+            </div>
+
             <AnimatePresence mode="wait">
                 {!teams ? (
                     <motion.div
@@ -90,8 +115,14 @@ const Results = ({ teams, setTeams, onReset, onSave, showAlert }) => {
                         className="space-y-6"
                     >
                         <div className="soccer-field-visual w-full max-w-[450px] mx-auto relative shadow-2xl">
+                            {/* Capas de Fondo Cancha Animadas */}
+                            <div className="absolute inset-0 transition-opacity duration-500 bg-center bg-cover" style={{ backgroundImage: "url('/cancha-cesped.webp')", opacity: fieldType === 'cesped' ? 1 : 0 }} />
+                            <div className="absolute inset-0 transition-opacity duration-500 bg-center bg-cover" style={{ backgroundImage: "url('/piso.webp')", opacity: fieldType === 'piso' ? 1 : 0 }} />
+                            {/* Filtro de Iluminación 3D */}
+                            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.06)_0%,rgba(0,0,0,0.5)_85%)] z-10" />
+
                             {/* Centered Premium Placeholder Content */}
-                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/15 backdrop-blur-[1px]">
+                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/15 backdrop-blur-[1px] z-20">
                                 <motion.div
                                     animate={{ 
                                         scale: [1, 1.08, 1],
@@ -124,6 +155,11 @@ const Results = ({ teams, setTeams, onReset, onSave, showAlert }) => {
                         className="space-y-6"
                     >
                         <div className="soccer-field-visual w-full max-w-[450px] mx-auto shadow-2xl relative">
+                            {/* Capas de Fondo Cancha Animadas */}
+                            <div className="absolute inset-0 transition-opacity duration-500 bg-center bg-cover" style={{ backgroundImage: "url('/cancha-cesped.webp')", opacity: fieldType === 'cesped' ? 1 : 0 }} />
+                            <div className="absolute inset-0 transition-opacity duration-500 bg-center bg-cover" style={{ backgroundImage: "url('/piso.webp')", opacity: fieldType === 'piso' ? 1 : 0 }} />
+                            {/* Filtro de Iluminación 3D */}
+                            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.06)_0%,rgba(0,0,0,0.5)_85%)] z-10" />
 
 
                             {teams.team1.map((p, i) => {
