@@ -20,7 +20,6 @@
 /* Premium Grass Field */
 .soccer-field-visual {
   position: relative;
-  border-radius: 2rem;
   overflow: hidden;
   aspect-ratio: 10 / 14;
   box-shadow: 
