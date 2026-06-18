@@ -39,28 +39,32 @@ const SorteoAnimation = ({ players, onComplete }) => {
     }, [rotationList, onComplete]);
 
     // Burbujas decorativas animadas en el fondo
-    const particles = Array.from({ length: 15 });
+    const particles = Array.from({ length: 20 });
 
     return (
-        <div className="fixed inset-0 z-[150] flex flex-col items-center justify-center bg-[#050b14]/98 backdrop-blur-3xl p-6 overflow-hidden">
+        <div className="fixed inset-0 z-[150] flex flex-col items-center justify-center bg-[#030712]/99 p-6 overflow-hidden">
             {/* Efecto de cuadrícula táctica en el fondo */}
             <div 
-                className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+                className="absolute inset-0 opacity-[0.04] pointer-events-none" 
                 style={{ 
-                    backgroundImage: 'radial-gradient(circle, #ffffff 1px, transparent 1px)', 
-                    backgroundSize: '24px 24px' 
+                    backgroundImage: 'radial-gradient(circle, #38bdf8 1px, transparent 1px)', 
+                    backgroundSize: '30px 30px' 
                 }} 
             />
             
-            {/* Líneas de escaneo HUD */}
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-fut-primary/3 to-transparent bg-[length:100%_4px] animate-pulse" />
+            {/* Línea de escaneo HUD animada de arriba a abajo */}
+            <motion.div 
+                className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-fut-primary to-transparent opacity-30 pointer-events-none"
+                animate={{ y: ['0vh', '100vh'] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+            />
 
             {/* Partículas flotantes de energía */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 {particles.map((_, i) => (
                     <motion.div
                         key={i}
-                        className="absolute w-1.5 h-1.5 rounded-full bg-fut-primary/30"
+                        className="absolute w-1 h-1 rounded-full bg-fut-primary/40"
                         initial={{ 
                             x: Math.random() * window.innerWidth, 
                             y: window.innerHeight + 10,
@@ -68,7 +72,7 @@ const SorteoAnimation = ({ players, onComplete }) => {
                         }}
                         animate={{ 
                             y: -20,
-                            x: `calc(inherit + ${Math.sin(i) * 50}px)`,
+                            x: `calc(inherit + ${Math.sin(i) * 60}px)`,
                             opacity: [0, 0.8, 0]
                         }}
                         transition={{ 
@@ -80,15 +84,15 @@ const SorteoAnimation = ({ players, onComplete }) => {
                     />
                 ))}
                 
-                {/* Gran brillo en el centro */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-fut-primary/10 rounded-full blur-[140px] pointer-events-none" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-fut-secondary/15 rounded-full blur-[90px] pointer-events-none" />
+                {/* Gran brillo en el centro con mezcla de colores */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-fut-primary/10 rounded-full blur-[150px] pointer-events-none" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-emerald-500/5 rounded-full blur-[120px] pointer-events-none" />
             </div>
 
             <div className="relative w-full max-w-md text-center z-10 flex flex-col items-center">
                 
                 {/* Pelota con Anillo de Energía de Carga */}
-                <div className="mb-12 relative flex justify-center items-center">
+                <div className="mb-10 relative flex justify-center items-center">
                     <motion.div 
                         className="absolute w-36 h-36 border border-fut-primary/20 rounded-full"
                         animate={{ scale: [1, 1.25, 1], opacity: [0.3, 0.7, 0.3] }}
@@ -115,54 +119,58 @@ const SorteoAnimation = ({ players, onComplete }) => {
                         <img 
                             src="/pelota-futsorteo.svg" 
                             alt="Sorteo" 
-                            className="w-full h-full drop-shadow-[0_0_25px_rgba(56,189,248,0.6)]" 
+                            className="w-full h-full drop-shadow-[0_0_30px_rgba(56,189,248,0.7)]" 
                         />
                     </motion.div>
                 </div>
 
                 <div className="space-y-2 mb-8">
-                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-fut-primary flex items-center justify-center gap-1.5">
-                        <Cpu size={12} className="animate-spin text-fut-primary/80" /> Algoritmo Fisher-Yates
+                    <span className="text-[9px] font-black uppercase tracking-[0.4em] text-fut-primary flex items-center justify-center gap-1.5 bg-fut-primary/5 border border-fut-primary/10 px-3 py-1 rounded-full w-fit mx-auto shadow-inner backdrop-blur-md">
+                        <Cpu size={11} className="animate-spin text-fut-primary/80" /> Algoritmo Fisher-Yates
                     </span>
                     <h2 className="text-3xl md:text-4xl font-[1000] italic uppercase tracking-tighter text-white">
                         Sorteando <span className="text-fut-primary">Equipos</span>
                     </h2>
                 </div>
 
-                {/* Panel de Visualización Digital del Jugador */}
-                <div className="w-full glass border border-white/10 rounded-3xl p-6 relative overflow-hidden shadow-2xl shadow-black/80 max-w-[320px] mx-auto bg-fut-dark/80">
-                    <div className="absolute top-3 left-3 flex gap-1">
-                        <div className="w-1.5 h-1.5 bg-fut-primary rounded-full animate-ping" />
-                        <div className="w-1.5 h-1.5 bg-white/20 rounded-full" />
+                {/* Panel de Visualización Digital del Jugador - Rediseño Hológrafo */}
+                <div className="w-full bg-[#08111e]/90 border-2 border-fut-primary/30 rounded-[2rem] p-7 relative overflow-hidden shadow-[0_0_40px_rgba(56,189,248,0.2)] max-w-[340px] mx-auto backdrop-blur-xl">
+                    <div className="absolute top-4 left-4 flex gap-1 items-center">
+                        <div className="w-2 h-2 bg-fut-primary rounded-full animate-ping" />
+                        <div className="w-2 h-2 bg-fut-primary rounded-full" />
                     </div>
-                    <div className="absolute top-3 right-3 text-[7px] font-mono tracking-widest text-white/30 uppercase">SYSTEM ACTIVE</div>
+                    <div className="absolute top-4 right-4 text-[7px] font-mono tracking-widest text-fut-primary/60 uppercase font-black">SYSTEM SECURE</div>
                     
                     {/* Corner Borders de estilo HUD */}
-                    <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-fut-primary/50" />
-                    <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-fut-primary/50" />
-                    <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-fut-primary/50" />
-                    <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-fut-primary/50" />
+                    <div className="absolute top-0 left-0 w-5 h-5 border-t-4 border-l-4 border-fut-primary" />
+                    <div className="absolute top-0 right-0 w-5 h-5 border-t-4 border-r-4 border-fut-primary" />
+                    <div className="absolute bottom-0 left-0 w-5 h-5 border-b-4 border-l-4 border-fut-primary" />
+                    <div className="absolute bottom-0 right-0 w-5 h-5 border-b-4 border-r-4 border-fut-primary" />
 
-                    <div className="relative h-20 flex flex-col items-center justify-center overflow-hidden">
+                    <div className="relative h-24 flex flex-col items-center justify-center overflow-hidden">
                         <AnimatePresence mode="popLayout">
                             <motion.div
                                 key={currentIndex}
-                                initial={{ y: 35, opacity: 0, filter: "blur(4px)" }}
-                                animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                                exit={{ y: -35, opacity: 0, filter: "blur(4px)" }}
-                                transition={{ duration: 0.08, type: "spring", stiffness: 200, damping: 18 }}
+                                initial={{ y: 40, opacity: 0, scale: 0.8, filter: "blur(5px)" }}
+                                animate={{ y: 0, opacity: 1, scale: 1, filter: "blur(0px)" }}
+                                exit={{ y: -40, opacity: 0, scale: 0.8, filter: "blur(5px)" }}
+                                transition={{ duration: 0.08, type: "spring", stiffness: 220, damping: 16 }}
                                 className="flex flex-col items-center justify-center h-full"
                             >
                                 <span 
-                                    className="text-2xl md:text-3xl font-[1000] italic uppercase tracking-tight text-white whitespace-nowrap"
-                                    style={{ textShadow: '0 0 15px rgba(56, 189, 248, 0.4)' }}
+                                    className="text-3xl md:text-4xl font-[1000] italic uppercase tracking-tight text-white whitespace-nowrap bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-fut-primary/90"
+                                    style={{ filter: 'drop-shadow(0 0 10px rgba(56, 189, 248, 0.5))' }}
                                 >
                                     {rotationList[currentIndex]?.name}
                                 </span>
                                 {rotationList[currentIndex]?.isGk && (
-                                    <div className="flex items-center gap-1.5 mt-2 px-2.5 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded-full text-amber-400 text-[8px] font-black uppercase tracking-wider italic shadow-lg shadow-amber-500/10">
-                                        <Shield size={8} /> Guardián
-                                    </div>
+                                    <motion.div 
+                                        initial={{ scale: 0.8 }}
+                                        animate={{ scale: 1 }}
+                                        className="flex items-center gap-1.5 mt-3 px-3 py-1 bg-amber-500/20 border border-amber-500/40 rounded-full text-amber-400 text-[8px] font-black uppercase tracking-wider italic shadow-lg shadow-amber-500/10"
+                                    >
+                                        <Shield size={9} /> Guardián
+                                    </motion.div>
                                 )}
                             </motion.div>
                         </AnimatePresence>
@@ -171,9 +179,9 @@ const SorteoAnimation = ({ players, onComplete }) => {
 
                 {/* Progress Bar de Alta Calidad */}
                 <div className="mt-12 w-full max-w-[280px]">
-                    <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden border border-white/5 p-[1px]">
+                    <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden border border-white/5 p-[1px] shadow-inner">
                         <motion.div
-                            className="h-full rounded-full bg-gradient-to-r from-fut-primary to-fut-secondary shadow-[0_0_10px_#38bdf8]"
+                            className="h-full rounded-full bg-gradient-to-r from-fut-primary via-fut-secondary to-emerald-400 shadow-[0_0_15px_#38bdf8]"
                             initial={{ width: "0%" }}
                             animate={{ width: "100%" }}
                             transition={{ duration: 1.8, ease: "easeInOut" }}
