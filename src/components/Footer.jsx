@@ -177,7 +177,7 @@ const Footer = () => {
                 <div className="pt-8 border-t border-white/5 flex flex-col lg:flex-row items-center justify-between gap-8">
                     <div className="flex flex-col items-center lg:items-start gap-2">
                         <p className="text-[10px] text-white/20 font-bold uppercase tracking-widest">
-                            © {currentYear} FutSorteo — Innovación en el Fulbito
+                            © {currentYear} FutSorteo — Innovación en el Fulbito ⚽
                         </p>
                         <div className="flex items-center gap-6">
                             {sections.legal.map((item) => (
