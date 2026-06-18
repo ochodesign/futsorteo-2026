@@ -19,24 +19,31 @@
 
 /* Premium Grass Field */
 .soccer-field-visual {
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(180deg, #2e7d32 0%, #1b5e20 100%);
-  background-size: 50% 10%, 10% 50%, auto;
-  /* Stripes simulation */
+  background: 
+    /* Sombra de iluminación 3D (luz en el centro, sombras en las esquinas) */
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 0%, rgba(0, 0, 0, 0.45) 80%),
+    /* Patrón de franjas de césped cortado profesional (vertical/horizontal) */
+    repeating-linear-gradient(180deg, 
+      #1e4620 0px, 
+      #1e4620 35px, 
+      #143516 35px, 
+      #143516 70px
+    );
   position: relative;
-  border: 4px solid #ffffff;
-  border-radius: 1rem;
+  border: 4px solid rgba(255, 255, 255, 0.65);
+  border-radius: 2rem;
   overflow: hidden;
   aspect-ratio: 10 / 14;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 100px rgba(0, 0, 0, 0.3);
+  box-shadow: 
+    0 25px 60px -15px rgba(0, 0, 0, 0.9), 
+    inset 0 0 100px rgba(0, 0, 0, 0.6);
 }
 
 .pitch-line {
   position: absolute;
-  border: 2px solid rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.5);
   pointer-events: none;
+  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.2));
 }
 
 .half-way {
@@ -44,15 +51,15 @@
   left: 0;
   width: 100%;
   height: 0;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.5);
 }
 
 .center-circle-pitch {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
 }
 
@@ -60,35 +67,46 @@
   top: -2px;
   left: 50%;
   transform: translateX(-50%);
-  width: 50%;
-  height: 15%;
+  width: 60%;
+  height: 18%;
   border-top: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 .goal-box-top {
   top: -2px;
   left: 50%;
   transform: translateX(-50%);
-  width: 25%;
-  height: 6%;
+  width: 30%;
+  height: 7%;
+  border-top: none;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 
 .penalty-area-bottom {
   bottom: -2px;
   left: 50%;
   transform: translateX(-50%);
-  width: 50%;
-  height: 15%;
+  width: 60%;
+  height: 18%;
   border-bottom: none;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
 .goal-box-bottom {
   bottom: -2px;
   left: 50%;
   transform: translateX(-50%);
-  width: 25%;
-  height: 6%;
+  width: 30%;
+  height: 7%;
+  border-bottom: none;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 }
+
 
 /* Player Cards Style as requested */
 .player-tag {

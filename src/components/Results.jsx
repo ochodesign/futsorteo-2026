@@ -87,9 +87,9 @@ const Results = ({ teams, setTeams, onReset, onSave, showAlert }) => {
                         key="empty"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="space-y-6 opacity-40"
+                        className="space-y-6"
                     >
-                        <div className="soccer-field-visual w-full max-w-[450px] mx-auto relative grayscale-[0.2]">
+                        <div className="soccer-field-visual w-full max-w-[450px] mx-auto relative shadow-2xl">
                             {/* Field Lines */}
                             <div className="pitch-line half-way"></div>
                             <div className="pitch-line center-circle-pitch"></div>
@@ -98,9 +98,29 @@ const Results = ({ teams, setTeams, onReset, onSave, showAlert }) => {
                             <div className="pitch-line penalty-area-bottom"></div>
                             <div className="pitch-line goal-box-bottom"></div>
 
-                            <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                <Users size={48} className="mb-2 text-white/20" />
-                                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 italic">A la espera del sorteo</p>
+                            {/* Centered Premium Placeholder Content */}
+                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/15 backdrop-blur-[1px]">
+                                <motion.div
+                                    animate={{ 
+                                        scale: [1, 1.08, 1],
+                                        rotate: [0, 5, -5, 0]
+                                    }}
+                                    transition={{ 
+                                        repeat: Infinity, 
+                                        duration: 4,
+                                        ease: "easeInOut"
+                                    }}
+                                    className="mb-4 w-20 h-20"
+                                >
+                                    <img 
+                                        src="/pelota-futsorteo.svg" 
+                                        alt="FutSorteo Pelota" 
+                                        className="w-full h-full drop-shadow-[0_0_15px_rgba(56,189,248,0.5)]" 
+                                    />
+                                </motion.div>
+                                <p className="text-[11px] font-black uppercase tracking-[0.25em] text-white/75 bg-fut-dark/80 backdrop-blur-md px-5 py-2.5 rounded-2xl border border-white/5 italic shadow-xl">
+                                    A la espera del sorteo ⚽
+                                </p>
                             </div>
                         </div>
                     </motion.div>
