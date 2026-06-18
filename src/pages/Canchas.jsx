@@ -160,7 +160,7 @@ const Canchas = () => {
                             Radar de Potreros
                         </span>
                         <h1 className="text-5xl md:text-8xl font-[1000] italic uppercase tracking-tighter leading-[0.85] text-white">
-                            ¿Donde se arma el <br />
+                            ¿Dónde se arma el <br />
                             <span className="text-fut-primary">picado hoy?</span>
                         </h1>
                         <p className="mt-6 text-white/50 text-lg md:text-2xl font-medium max-w-2xl leading-tight">
