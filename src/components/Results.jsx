@@ -90,14 +90,6 @@ const Results = ({ teams, setTeams, onReset, onSave, showAlert }) => {
                         className="space-y-6"
                     >
                         <div className="soccer-field-visual w-full max-w-[450px] mx-auto relative shadow-2xl">
-                            {/* Field Lines */}
-                            <div className="pitch-line half-way"></div>
-                            <div className="pitch-line center-circle-pitch"></div>
-                            <div className="pitch-line penalty-area-top"></div>
-                            <div className="pitch-line goal-box-top"></div>
-                            <div className="pitch-line penalty-area-bottom"></div>
-                            <div className="pitch-line goal-box-bottom"></div>
-
                             {/* Centered Premium Placeholder Content */}
                             <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/15 backdrop-blur-[1px]">
                                 <motion.div
@@ -132,12 +124,7 @@ const Results = ({ teams, setTeams, onReset, onSave, showAlert }) => {
                         className="space-y-6"
                     >
                         <div className="soccer-field-visual w-full max-w-[450px] mx-auto shadow-2xl relative">
-                            <div className="pitch-line half-way"></div>
-                            <div className="pitch-line center-circle-pitch"></div>
-                            <div className="pitch-line penalty-area-top"></div>
-                            <div className="pitch-line goal-box-top"></div>
-                            <div className="pitch-line penalty-area-bottom"></div>
-                            <div className="pitch-line goal-box-bottom"></div>
+
 
                             {teams.team1.map((p, i) => {
                                 const pos = getPosition(i, teams.team1.length, true);
