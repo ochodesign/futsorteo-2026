@@ -93,15 +93,17 @@ const Results = ({ teams, setTeams, onReset, onSave, showAlert }) => {
                 <div className="bg-fut-dark/80 border border-white/5 p-1 rounded-2xl flex gap-1 items-center shadow-2xl relative z-10">
                     <button
                         onClick={() => setFieldType('cesped')}
-                        className={`px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 flex items-center gap-1.5 italic ${fieldType === 'cesped' ? 'bg-fut-primary text-fut-dark shadow-lg shadow-fut-primary/20 scale-105' : 'text-white/40 hover:text-white'}`}
+                        className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 flex items-center gap-2 italic ${fieldType === 'cesped' ? 'bg-emerald-600/90 text-white border border-emerald-500/30 shadow-lg shadow-emerald-600/35 scale-105' : 'text-white/40 hover:text-white'}`}
                     >
-                        Césped 🌱
+                        <span className={`w-2.5 h-2.5 rounded-full bg-emerald-400 transition-all ${fieldType === 'cesped' ? 'animate-pulse shadow-[0_0_8px_#34d399]' : 'opacity-40'}`} />
+                        Césped
                     </button>
                     <button
                         onClick={() => setFieldType('piso')}
-                        className={`px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 flex items-center gap-1.5 italic ${fieldType === 'piso' ? 'bg-fut-primary text-fut-dark shadow-lg shadow-fut-primary/20 scale-105' : 'text-white/40 hover:text-white'}`}
+                        className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 flex items-center gap-2 italic ${fieldType === 'piso' ? 'bg-sky-600/90 text-white border border-sky-500/30 shadow-lg shadow-sky-600/35 scale-105' : 'text-white/40 hover:text-white'}`}
                     >
-                        Piso 🏟️
+                        <span className={`w-2.5 h-2.5 rounded-full bg-sky-400 transition-all ${fieldType === 'piso' ? 'animate-pulse shadow-[0_0_8px_#38bdf8]' : 'opacity-40'}`} />
+                        Piso
                     </button>
                 </div>
             </div>
