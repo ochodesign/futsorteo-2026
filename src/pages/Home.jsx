@@ -72,6 +72,29 @@ const Home = ({ showAlert, showConfirm }) => {
         localStorage.setItem('futsorteo_bulk', bulkInput);
     }, [players, bulkInput]);
 
+    // Historial de sorteos persistente
+    const [history, setHistory] = useState(() => {
+        const saved = localStorage.getItem('futsorteo_historial');
+        if (saved) {
+            try {
+                return JSON.parse(saved);
+            } catch (e) {
+                return [];
+            }
+        }
+        return [];
+    });
+
+    // Función de barajado Fisher-Yates para asegurar aleatoriedad real y sin sesgos
+    const shuffleArray = (array) => {
+        const arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    };
+
     // Autoscroll a resultados
     useEffect(() => {
         if (teams) {
@@ -170,9 +193,9 @@ const Home = ({ showAlert, showConfirm }) => {
         const currentGks = players.filter(p => p.isGk);
         const currentField = players.filter(p => !p.isGk);
 
-        // Barajamos ambos grupos
-        const shuffledGks = [...currentGks].sort(() => Math.random() - 0.5);
-        const shuffledField = [...currentField].sort(() => Math.random() - 0.5);
+        // Barajamos usando el algoritmo Fisher-Yates (aleatoriedad pura)
+        const shuffledGks = shuffleArray(currentGks);
+        const shuffledField = shuffleArray(currentField);
 
         let team1 = [];
         let team2 = [];
@@ -187,7 +210,7 @@ const Home = ({ showAlert, showConfirm }) => {
             team2 = [...shuffledField.slice(4, 9)];
         } else {
             // Sin arqueros marcados: 5 y 5
-            const allPlayers = [...players].sort(() => Math.random() - 0.5);
+            const allPlayers = shuffleArray(players);
             team1 = allPlayers.slice(0, 5);
             team2 = allPlayers.slice(5, 10);
         }
@@ -195,6 +218,18 @@ const Home = ({ showAlert, showConfirm }) => {
         setTeams({ team1, team2 });
         setLoading(false);
         setShowAnimation(false);
+
+        // Registrar en el historial de sorteos recientes
+        const newDraw = {
+            id: Date.now(),
+            date: new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }) + ' hs',
+            team1: team1.map(p => ({ name: p.name, isGk: p.isGk })),
+            team2: team2.map(p => ({ name: p.name, isGk: p.isGk }))
+        };
+        const updatedHistory = [newDraw, ...history].slice(0, 5); // Guardamos los últimos 5
+        setHistory(updatedHistory);
+        localStorage.setItem('futsorteo_historial', JSON.stringify(updatedHistory));
+
         confetti({
             particleCount: 150,
             spread: 70,
@@ -219,6 +254,21 @@ const Home = ({ showAlert, showConfirm }) => {
             console.error("Error saving:", error);
             showAlert("Error", "No pudimos guardar el registro. Revisá la conexión.", "error");
         }
+    };
+
+    const clearHistory = () => {
+        localStorage.removeItem('futsorteo_historial');
+        setHistory([]);
+        showAlert("Historial limpio", "Se eliminaron todos los sorteos anteriores.", "info");
+    };
+
+    const copyPastDraw = (draw) => {
+        const team1Names = draw.team1.map(p => `${p.name}${p.isGk ? ' (ARQ)' : ''}`).join('\n');
+        const team2Names = draw.team2.map(p => `${p.name}${p.isGk ? ' (ARQ)' : ''}`).join('\n');
+        const text = `🏆 *SORTEO ANTERIOR (${draw.date})* 🏆\n\n⚪ *EQUIPO A:*\n${team1Names}\n\n⚫ *EQUIPO B:*\n${team2Names}\n\nGenerado en futsorteo.com`;
+
+        navigator.clipboard.writeText(text);
+        showAlert("¡Copiado!", "Sorteo copiado al portapapeles.", "success");
     };
 
     return (
@@ -249,6 +299,71 @@ const Home = ({ showAlert, showConfirm }) => {
                     />
                 </div>
             </main>
+
+            {/* Historial de Sorteos Recientes */}
+            {history.length > 0 && (
+                <section className="max-w-6xl mx-auto px-4 pb-16">
+                    <div className="glass rounded-[2rem] p-6 md:p-8 border border-white/5">
+                        <div className="flex items-center justify-between gap-4 mb-6 border-b border-white/5 pb-4">
+                            <div>
+                                <h2 className="text-xl font-[1000] italic uppercase tracking-tighter text-white">
+                                    Sorteos <span className="text-fut-primary">Recientes 🕒</span>
+                                </h2>
+                                <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold mt-1">Historial local de los últimos picados</p>
+                            </div>
+                            <button
+                                onClick={clearHistory}
+                                className="px-4 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 border border-red-500/20 hover:border-red-500/40 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all"
+                            >
+                                Borrar Historial
+                            </button>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {history.map((draw) => (
+                                <div key={draw.id} className="bg-fut-dark/60 border border-white/5 rounded-2xl p-5 flex flex-col justify-between hover:border-fut-primary/20 transition-colors group">
+                                    <div>
+                                        <div className="flex items-center justify-between mb-4 border-b border-white/5 pb-2">
+                                            <span className="text-[10px] font-black uppercase tracking-widest text-fut-primary">{draw.date}</span>
+                                            <button
+                                                onClick={() => copyPastDraw(draw)}
+                                                className="text-[10px] font-bold text-white/40 group-hover:text-fut-primary hover:scale-105 transition-all flex items-center gap-1.5 uppercase tracking-widest"
+                                            >
+                                                Compartir
+                                            </button>
+                                        </div>
+
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <h4 className="text-[9px] font-black uppercase tracking-widest text-white/50 mb-2">⚪ Equipo A</h4>
+                                                <ul className="space-y-1">
+                                                    {draw.team1.map((p, idx) => (
+                                                        <li key={idx} className="text-[11px] font-semibold text-white/70 truncate flex items-center gap-1">
+                                                            {p.isGk && <span className="text-[9px] bg-yellow-400/20 text-yellow-400 px-1 rounded font-black shrink-0">ARQ</span>}
+                                                            {p.name}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <h4 className="text-[9px] font-black uppercase tracking-widest text-white/50 mb-2">⚫ Equipo B</h4>
+                                                <ul className="space-y-1">
+                                                    {draw.team2.map((p, idx) => (
+                                                        <li key={idx} className="text-[11px] font-semibold text-white/70 truncate flex items-center gap-1">
+                                                            {p.isGk && <span className="text-[9px] bg-yellow-400/20 text-yellow-400 px-1 rounded font-black shrink-0">ARQ</span>}
+                                                            {p.name}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
 
             <GlobalStats />
             <SeoContent />
