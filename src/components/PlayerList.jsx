@@ -68,8 +68,9 @@ const PlayerList = ({ players, bulkInput, setBulkInput, onSorteo, loading, clear
                     <h3 className="text-[10px] font-black uppercase text-white/40 tracking-[0.2em] flex items-center gap-2 italic">
                         <Footprints size={12} className="text-fut-primary" /> Plantel Confirmado ({players.length})
                     </h3>
-                    <span className={`px-3 py-1 rounded-full border text-[9px] font-black uppercase tracking-widest transition-all ${players.filter(p => p.isGk).length === 2 ? 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10 shadow-[0_0_10px_rgba(16,185,129,0.15)] animate-pulse' : 'border-white/10 text-white/40 bg-white/2'}`}>
-                        Arqueros: {players.filter(p => p.isGk).length}/2
+                    <span className={`px-3 py-1 rounded-full border text-[9px] font-black uppercase tracking-widest transition-all flex items-center gap-1.5 ${players.filter(p => p.isGk).length === 2 ? 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10 shadow-[0_0_10px_rgba(16,185,129,0.15)] animate-pulse' : 'border-white/10 text-white/40 bg-white/2'}`}>
+                        <img src="/guantes.webp" alt="Guantes" className="w-3.5 h-3.5 object-contain brightness-110" />
+                        {players.filter(p => p.isGk).length}/2
                     </span>
                 </div>
 
@@ -84,8 +85,7 @@ const PlayerList = ({ players, bulkInput, setBulkInput, onSorteo, loading, clear
                                         opacity: 1,
                                         scale: 1,
                                         y: 0,
-                                        x: [-3, 3, -3, 3, 0],
-                                        borderColor: ['#f59e0b', '#ef4444', '#f59e0b']
+                                        x: [-3, 3, -3, 3, 0]
                                     }
                                     : { opacity: 1, scale: 1, y: 0, x: 0 }
                                 }
