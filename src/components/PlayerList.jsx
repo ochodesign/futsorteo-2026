@@ -43,12 +43,11 @@ const PlayerList = ({ players, bulkInput, setBulkInput, onSorteo, loading, clear
                         />
 
                         <div className="absolute bottom-3 right-3 z-10">
-                            <div className={`px-4 py-2 rounded-xl border text-[10px] font-black uppercase tracking-widest transition-all duration-300 backdrop-blur-md shadow-2xl flex items-center gap-1.5 ${players.length === 10
-                                ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400 scale-105 shadow-emerald-500/20'
+                            <div className={`px-3 py-1.5 rounded-xl border text-[10px] font-black tracking-widest transition-all duration-300 backdrop-blur-md ${players.length === 10
+                                ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400 shadow-lg shadow-emerald-500/10'
                                 : 'bg-white/5 border-white/10 text-white/40'
                                 }`}>
-                                {players.length === 10 && <Sparkles size={10} className="animate-spin" />}
-                                {players.length}/10 Jugadores
+                                {players.length}/10
                             </div>
                         </div>
                     </div>
@@ -102,15 +101,15 @@ const PlayerList = ({ players, bulkInput, setBulkInput, onSorteo, loading, clear
                                 }`}
                             >
                                 <div className="flex-1 flex items-center gap-2.5 p-3 min-w-0">
-                                    <div className={`p-1.5 rounded-lg shrink-0 transition-all duration-300 ${
+                                    <div className={`p-1 rounded-lg shrink-0 transition-all duration-300 ${
                                         p.isGk 
                                             ? 'bg-amber-500 text-fut-dark shadow-[0_0_10px_rgba(245,158,11,0.4)] scale-110' 
-                                            : 'bg-white/5 text-white/30 group-hover:text-fut-primary group-hover:bg-fut-primary/10 group-hover:rotate-12 transition-all'
+                                            : 'bg-white/5 group-hover:bg-fut-primary/10 group-hover:scale-115 transition-all'
                                     }`}>
                                         {p.isGk ? (
-                                            <img src="/guantes%20de%20arquero.webp" alt="Arco" className="w-4 h-4 object-contain brightness-110" />
+                                            <img src="/guantes.webp" alt="Arco" className="w-6 h-6 object-contain brightness-110" />
                                         ) : (
-                                            <Shirt size={12} strokeWidth={2.5} />
+                                            <img src="/jugadores.webp" alt="Jugador" className="w-6 h-6 object-contain" />
                                         )}
                                     </div>
                                     <span className={`text-[11px] font-black uppercase tracking-wider truncate ${
